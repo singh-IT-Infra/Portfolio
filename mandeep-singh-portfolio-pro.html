@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mandeep Singh — IT Infrastructure & M365 Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F8FA; --surface:#FFFFFF; --surface2:#F1F3F6;
+    --ink:#14181F; --muted:#5B6370; --line:#E1E4E9;
+    --accent:#2B4C7E; --accent-soft:#DCE6F2;
+    --signal:#1B9E77; --signal-soft:#DCF3EA;
+    --amber:#B5791F; --amber-soft:#F6E9D6;
+    --mono:'JetBrains Mono', monospace; --disp:'Space Grotesk', sans-serif; --body:'Inter', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg); color:var(--ink); font-family:var(--body); line-height:1.6; -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 10% -5%, rgba(43,76,126,0.07), transparent 38%),
+      radial-gradient(circle at 92% 8%, rgba(27,158,119,0.06), transparent 35%);
+    background-attachment:fixed;
+  }
+
+  /* tech stack strip */
+  .stack-strip{display:flex; flex-wrap:wrap; gap:12px; margin-top:34px;}
+  .stack-chip{display:flex; align-items:center; gap:9px; background:var(--surface); border:1px solid var(--line); border-radius:11px; padding:9px 14px 9px 10px;}
+  .stack-icon{width:26px; height:26px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-family:var(--disp); font-weight:700; font-size:10px; color:#fff; flex-shrink:0;}
+  .stack-label{font-family:var(--mono); font-size:12px; color:var(--ink);}
+
+  /* industry reach badges */
+  .reach-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:22px;}
+  .reach-badge{font-family:var(--mono); font-size:11.5px; background:var(--accent-soft); color:var(--accent); padding:7px 13px; border-radius:100px; font-weight:500;}
+
+  /* radar chart */
+  .radar-card{border:1px solid var(--line); border-radius:16px; background:var(--surface); padding:30px; display:grid; grid-template-columns:1fr 1fr; gap:30px; align-items:center;}
+  @media (max-width:720px){ .radar-card{grid-template-columns:1fr;} }
+  .radar-card svg{width:100%; height:auto;}
+  .radar-legend{display:flex; flex-direction:column; gap:12px;}
+  .radar-item{display:flex; align-items:center; justify-content:space-between; font-size:13.5px; padding-bottom:10px; border-bottom:1px solid var(--line);}
+  .radar-item:last-child{border-bottom:none;}
+  .radar-item span:last-child{font-family:var(--mono); font-size:12px; color:var(--accent); font-weight:600;}
+
+  /* cert rings */
+  .cert-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:18px;}
+  @media (max-width:640px){ .cert-grid{grid-template-columns:1fr;} }
+  .cert-card{border:1px solid var(--line); border-radius:14px; background:var(--surface); padding:20px; display:flex; align-items:center; gap:18px;}
+  .ring{position:relative; width:64px; height:64px; flex-shrink:0;}
+  .ring svg{transform:rotate(-90deg);}
+  .ring-track{fill:none; stroke:var(--surface2); stroke-width:6;}
+  .ring-fill{fill:none; stroke:var(--signal); stroke-width:6; stroke-linecap:round; transition:stroke-dashoffset 1.4s ease;}
+  .ring-label{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:10px; color:var(--signal); font-weight:600;}
+  .cert-name{font-family:var(--disp); font-weight:600; font-size:14.5px;}
+  .cert-sub{font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:3px;}
+
+  .counter{transition:opacity .3s;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{animation-duration:.01ms !important; transition-duration:.01ms !important;} }
+  a{color:inherit;} ::selection{background:var(--accent-soft); color:var(--ink);}
+  .wrap{max-width:1000px; margin:0 auto; padding:0 32px;}
+  @media (max-width:640px){ .wrap{padding:0 20px;} }
+
+  nav{position:sticky; top:0; z-index:50; background:rgba(247,248,250,.86); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; height:64px;}
+  .nav-mark{font-family:var(--mono); font-size:13px; color:var(--muted);}
+  .nav-mark strong{color:var(--ink); font-weight:500;}
+  .nav-links{display:flex; gap:22px; font-size:13.5px;}
+  .nav-links a{text-decoration:none; color:var(--muted); transition:color .15s;}
+  .nav-links a:hover, .nav-links a:focus-visible{color:var(--ink);}
+  .nav-links a:focus-visible{outline:2px solid var(--accent); outline-offset:4px; border-radius:2px;}
+  @media (max-width:760px){ .nav-links{gap:12px; font-size:11.5px;} .nav-links span{display:none;} }
+
+  header.hero{padding:84px 0 40px;}
+  .eyebrow{font-family:var(--mono); font-size:12.5px; color:var(--signal); display:flex; align-items:center; gap:8px; margin-bottom:20px;}
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--signal); box-shadow:0 0 0 3px var(--signal-soft); animation:pulse 2.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:.45;}}
+  h1{font-family:var(--disp); font-weight:700; letter-spacing:-.02em; font-size:clamp(36px,5.6vw,58px); line-height:1.08; max-width:820px;}
+  h1 .accent{color:var(--accent);}
+  .role{font-family:var(--disp); font-weight:500; font-size:clamp(17px,2.1vw,20px); color:var(--muted); margin-top:14px; max-width:640px;}
+  .lede{max-width:620px; margin-top:18px; font-size:15.5px; color:var(--muted);}
+  .contact-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;}
+  .pill{font-family:var(--mono); font-size:12.5px; padding:8px 14px; border:1px solid var(--line); border-radius:100px; text-decoration:none; background:var(--surface); transition:border-color .15s, transform .15s;}
+  .pill:hover{border-color:var(--accent); transform:translateY(-1px);}
+
+  .statusbar{margin-top:36px; border:1px solid var(--line); border-radius:14px; background:var(--surface); display:grid; grid-template-columns:repeat(4,1fr); overflow:hidden;}
+  @media (max-width:720px){ .statusbar{grid-template-columns:repeat(2,1fr);} }
+  .stat{padding:20px; border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  @media (max-width:720px){ .stat:nth-child(2n){border-right:none;} .stat{border-bottom:1px solid var(--line);} .stat:nth-last-child(-n+2){border-bottom:none;} }
+  .stat-label{font-family:var(--mono); font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em;}
+  .stat-value{font-family:var(--disp); font-weight:600; font-size:20px; margin-top:6px;}
+  .stat-value .unit{font-size:13px; color:var(--muted); font-weight:400;}
+
+  section{padding:58px 0;}
+  .section-head{display:flex; align-items:baseline; gap:14px; margin-bottom:14px;}
+  .section-head .idx{font-family:var(--mono); font-size:12.5px; color:var(--signal);}
+  .section-head h2{font-family:var(--disp); font-weight:600; font-size:25px; letter-spacing:-.01em;}
+  .section-head .rule{flex:1; height:1px; background:var(--line);}
+  .section-sub{color:var(--muted); font-size:14.5px; max-width:640px; margin-bottom:30px;}
+
+  .tenants{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  @media (max-width:640px){ .tenants{grid-template-columns:1fr;} }
+  .tenant-card{border:1px solid var(--line); border-radius:14px; padding:22px; background:var(--surface); position:relative; overflow:hidden;}
+  .tenant-card::before{content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:var(--accent);}
+  .tenant-name{font-family:var(--disp); font-weight:600; font-size:17px;}
+  .tenant-sub{font-family:var(--mono); font-size:11.5px; color:var(--signal); margin-top:4px;}
+  .tenant-desc{font-size:14px; color:var(--muted); margin-top:10px;}
+
+  .job{padding:26px 0; border-top:1px solid var(--line); display:grid; grid-template-columns:190px 1fr; gap:24px;}
+  .job:last-child{border-bottom:1px solid var(--line);}
+  @media (max-width:640px){ .job{grid-template-columns:1fr; gap:8px;} }
+  .job-meta{font-family:var(--mono); font-size:12.5px; color:var(--muted);}
+  .job-title{font-family:var(--disp); font-weight:600; font-size:18px; margin-bottom:2px;}
+  .job-org{color:var(--accent); font-weight:500; font-size:14.5px; margin-bottom:12px;}
+  .job ul{list-style:none;} .job li{position:relative; padding-left:18px; font-size:14.5px; color:var(--muted); margin-bottom:8px;}
+  .job li::before{content:'—'; position:absolute; left:0; color:#B9C0C9;}
+
+  .projects{display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;}
+  @media (max-width:820px){ .projects{grid-template-columns:1fr 1fr;} }
+  @media (max-width:600px){ .projects{grid-template-columns:1fr;} }
+  .proj{border:1px solid var(--line); border-radius:14px; padding:22px; background:var(--surface); display:flex; flex-direction:column;}
+  .proj-status{font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; padding:3px 9px; border-radius:100px; display:inline-block; width:fit-content; margin-bottom:12px;}
+  .status-active{background:var(--signal-soft); color:var(--signal);}
+  .status-done{background:var(--surface2); color:var(--muted);}
+  .proj-title{font-family:var(--disp); font-weight:600; font-size:15.5px; margin-bottom:8px;}
+  .proj-desc{font-size:13.3px; color:var(--muted); flex:1; line-height:1.6;}
+  .proj-tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:14px;}
+  .tag{font-family:var(--mono); font-size:10.5px; color:var(--accent); background:var(--accent-soft); padding:3px 8px; border-radius:6px;}
+
+  .flagship{border:1px solid var(--line); border-radius:16px; background:var(--surface); padding:32px; margin-top:8px;}
+  .flag-tag{font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; background:var(--amber-soft); color:var(--amber); padding:4px 10px; border-radius:100px; display:inline-block;}
+  .flag-title{font-family:var(--disp); font-weight:700; font-size:22px; margin-top:14px; letter-spacing:-.01em;}
+  .flag-punch{font-family:var(--disp); font-size:14.5px; color:var(--accent); font-weight:500; margin-top:6px;}
+  .flag-desc{color:var(--muted); font-size:14.5px; margin-top:14px; max-width:720px;}
+
+  .metric-row{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:26px;}
+  @media (max-width:720px){ .metric-row{grid-template-columns:repeat(2,1fr);} }
+  .metric{background:var(--surface2); border-radius:10px; padding:16px;}
+  .metric-num{font-family:var(--disp); font-weight:700; font-size:21px; color:var(--accent);}
+  .metric-label{font-family:var(--mono); font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-top:4px;}
+
+  .cap-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:24px;}
+  .cap{font-family:var(--mono); font-size:12px; background:var(--surface2); color:var(--ink); padding:7px 13px; border-radius:100px; border:1px solid var(--line);}
+
+  .chart-card{border:1px solid var(--line); border-radius:14px; background:var(--surface); padding:26px; margin-top:22px;}
+  .chart-title{font-family:var(--disp); font-weight:600; font-size:15px; margin-bottom:18px;}
+  .bar-row{display:flex; align-items:center; gap:14px; margin-bottom:14px;}
+  .bar-label{font-family:var(--mono); font-size:12px; color:var(--muted); width:190px; flex-shrink:0;}
+  .bar-track{flex:1; height:10px; background:var(--surface2); border-radius:6px; overflow:hidden;}
+  .bar-fill{height:100%; border-radius:6px; background:var(--amber);}
+  .bar-fill.signal{background:var(--signal);}
+  .bar-fill.accent{background:var(--accent);}
+  .bar-val{font-family:var(--mono); font-size:12px; color:var(--ink); width:56px; text-align:right; flex-shrink:0;}
+
+  .spotlight{border:1px solid var(--line); border-radius:16px; background:var(--surface); padding:32px; margin-top:8px;}
+  .spot-badge{font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; background:var(--signal-soft); color:var(--signal); padding:4px 10px; border-radius:100px;}
+  .spot-title{font-family:var(--disp); font-weight:700; font-size:21px; margin-top:14px;}
+  .spot-desc{color:var(--muted); font-size:14.5px; margin-top:12px; max-width:720px;}
+  .workstreams{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:26px;}
+  @media (max-width:700px){ .workstreams{grid-template-columns:1fr;} }
+  .ws{border-top:1px solid var(--line); padding-top:14px;}
+  .ws-title{font-family:var(--disp); font-weight:600; font-size:14.5px; margin-bottom:6px;}
+  .ws-desc{font-size:13.3px; color:var(--muted); line-height:1.6;}
+
+  .skill-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:0; border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--surface);}
+  @media (max-width:640px){ .skill-grid{grid-template-columns:1fr;} }
+  .skill-block{padding:22px 26px; border-right:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .skill-block:nth-child(2n){border-right:none;}
+  @media (max-width:640px){ .skill-block{border-right:none;} }
+  .skill-block:nth-last-child(-n+2){border-bottom:none;}
+  @media (max-width:640px){ .skill-block:last-child{border-bottom:none;} }
+  .skill-block h3{font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--signal); margin-bottom:12px;}
+  .skill-block p{font-size:14px; line-height:1.7;}
+
+  .creds{display:flex; flex-direction:column;}
+  .cred-row{display:flex; justify-content:space-between; align-items:baseline; gap:16px; padding:16px 0; border-top:1px solid var(--line); font-size:14.5px;}
+  .cred-row:last-child{border-bottom:1px solid var(--line);}
+  .cred-name{font-weight:500;} .cred-org{color:var(--muted); font-size:13px;}
+  .cred-when{font-family:var(--mono); font-size:12px; color:var(--muted); white-space:nowrap;}
+
+  .confid{margin-top:12px; background:var(--surface2); border-left:3px solid var(--muted); border-radius:8px; padding:14px 18px; font-size:12.5px; color:var(--muted); max-width:720px;}
+
+  footer{padding:56px 0 48px; border-top:1px solid var(--line); margin-top:20px;}
+  .foot-cta h2{font-family:var(--disp); font-weight:600; font-size:27px; letter-spacing:-.01em; margin-bottom:12px;}
+  .foot-cta p{color:var(--muted); max-width:480px; margin-bottom:24px;}
+  .foot-links{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{font-family:var(--mono); font-size:13px; padding:11px 20px; border-radius:8px; text-decoration:none; transition:transform .15s, opacity .15s;}
+  .btn-primary{background:var(--ink); color:#fff;} .btn-primary:hover{transform:translateY(-1px); opacity:.9;}
+  .btn-ghost{border:1px solid var(--line);} .btn-ghost:hover{border-color:var(--accent); transform:translateY(-1px);}
+  .fine{font-family:var(--mono); font-size:11.5px; color:var(--muted); margin-top:24px;}
+
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="nav-mark"><strong>Mandeep Singh</strong> <span style="color:var(--line)">/</span> IT Infra & M365</div>
+    <div class="nav-links">
+      <a href="#experience">Experience</a>
+      <a href="#g3projects">G3 Projects</a>
+      <a href="#flagship">Infra Rebuild</a>
+      <a href="#spotlight">Client Work</a>
+      <a href="#proficiency">Proficiency</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span>AVAILABLE FOR NEW OPPORTUNITIES</div>
+    <h1>Infrastructure that stays <span class="accent">up, secure, and quiet.</span></h1>
+    <p class="role">Senior IT Infrastructure & M365 Engineer — G3 Worldwide Pvt. Ltd.</p>
+    <p class="lede">Seven-plus years running hybrid IT end-to-end — identity, networking, security, and cloud migrations — currently the sole IT engineer keeping two multi-tenant M365 environments and 300+ users across India, the US, and the UAE online.</p>
+    <div class="contact-row">
+      <a class="pill" href="mailto:mandeep.ithelp@gmail.com">mandeep.ithelp@gmail.com</a>
+      <a class="pill" href="tel:+916280387811">+91 62803 87811</a>
+      <a class="pill" href="https://linkedin.com/in/mandeep-singh-aa37b7201" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <span class="pill" style="cursor:default;">Mohali, Punjab, India</span>
+    </div>
+    <div class="statusbar reveal">
+      <div class="stat"><div class="stat-label">Tenants managed</div><div class="stat-value"><span class="counter" data-target="2">0</span> <span class="unit">M365</span></div></div>
+      <div class="stat"><div class="stat-label">Users supported</div><div class="stat-value"><span class="counter" data-target="300">0</span><span class="unit">+</span></div></div>
+      <div class="stat"><div class="stat-label">Regions</div><div class="stat-value">IN · US · UAE</div></div>
+      <div class="stat"><div class="stat-label">Downtime on cutovers</div><div class="stat-value"><span class="counter" data-target="0">0</span> <span class="unit">min</span></div></div>
+    </div>
+
+    <div class="stack-strip reveal">
+      <div class="stack-chip"><span class="stack-icon" style="background:#2B4C7E;">M</span><span class="stack-label">Microsoft 365</span></div>
+      <div class="stack-chip"><span class="stack-icon" style="background:#1B9E77;">AZ</span><span class="stack-label">Azure</span></div>
+      <div class="stack-chip"><span class="stack-icon" style="background:#5B6370;">ID</span><span class="stack-label">Entra ID</span></div>
+      <div class="stack-chip"><span class="stack-icon" style="background:#B5791F;">FW</span><span class="stack-label">Enterprise Firewalls</span></div>
+      <div class="stack-chip"><span class="stack-icon" style="background:#2B4C7E;">PS</span><span class="stack-label">PowerShell</span></div>
+      <div class="stack-chip"><span class="stack-icon" style="background:#1B9E77;">GW</span><span class="stack-label">Google Workspace</span></div>
+      <div class="stack-chip"><span class="stack-icon" style="background:#5B6370;">400</span><span class="stack-label">AS400</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="tenants">
+  <div class="wrap">
+    <div class="section-head"><span class="idx">◆</span><h2>Environments under management</h2><span class="rule"></span></div>
+    <div class="tenants">
+      <div class="tenant-card reveal">
+        <div class="tenant-name">stealthmanage.com</div>
+        <div class="tenant-sub">HOSPITALITY — U.S.-BASED HOTEL BRAND PARTNERSHIPS</div>
+        <div class="tenant-desc">Full M365 administration and identity security hardening across a hospitality tenant with U.S. brand-partner connections.</div>
+      </div>
+      <div class="tenant-card reveal">
+        <div class="tenant-name">tablacuisine.com</div>
+        <div class="tenant-sub">MULTI-LOCATION RESTAURANT FRANCHISE — U.S.</div>
+        <div class="tenant-desc">Franchise-wide identity, licensing, and telephony administration for a multi-location restaurant brand.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head"><span class="idx">◆</span><h2>Experience</h2><span class="rule"></span></div>
+    <div class="job reveal">
+      <div class="job-meta">Jan 2026 — Present</div>
+      <div>
+        <div class="job-title">Senior IT Infrastructure & M365 Engineer</div>
+        <div class="job-org">G3 Worldwide Pvt. Ltd. · Mohali, India · On-site</div>
+        <ul>
+          <li>Managing Microsoft 365 environments, security, and infrastructure across G3 Worldwide's brand portfolio, including identity management, Conditional Access, and cloud infrastructure.</li>
+          <li>Leading a multi-tenant consolidation migration covering identity, mailboxes, and file storage for 100+ users.</li>
+          <li>Driving a network redesign focused on segmentation and reduced attack surface.</li>
+          <li>Providing end-user support across both brands under G3's portfolio.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="job reveal">
+      <div class="job-meta">Jan 2026 — Present</div>
+      <div>
+        <div class="job-title">Microsoft 365 Engineer</div>
+        <div class="job-org">Stealth Management Group LLC · United States · Remote</div>
+        <ul>
+          <li>Serving as the dedicated Microsoft 365 Global Administrator for global hospitality operations, managing the tenant end-to-end.</li>
+          <li>Managing Microsoft Entra ID identity lifecycle — user provisioning, licensing, and access governance.</li>
+          <li>Designing and implementing Conditional Access policies — sign-in frequency, risk-based access, mobile app restrictions, and country-based controls.</li>
+          <li>Leading tenant-to-tenant migration planning and execution, including domain/UPN strategy and mailbox migration.</li>
+          <li>Administering Microsoft Defender for Office 365 and endpoint security, plus SharePoint, OneDrive, and Purview retention/compliance.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="job reveal">
+      <div class="job-meta">Jun 2021 — Dec 2025<br>(4 yrs 7 mos)</div>
+      <div>
+        <div class="job-title">Technical Helpdesk Administrator</div>
+        <div class="job-org">Sourcemash Technologies Pvt. Ltd. · Mohali, India · On-site</div>
+        <ul>
+          <li>Delivered end-to-end IT operations and cloud integrations across hybrid environments for in-house and client-facing enterprise support.</li>
+          <li>Led a full internal infrastructure modernization for Sourcemash — network, firewall platform, and hybrid identity — detailed below.</li>
+          <li>Designed and implemented office network architecture for a new Bengaluru location — firewall, switches, Wi-Fi, VLANs, and CCTV — with Azure hybrid connectivity.</li>
+          <li>Migrated file server storage to SharePoint Online and enforced compliance policy across 200+ Intune-managed devices.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="job reveal">
+      <div class="job-meta">Jun 2021 — Dec 2025<br>(4 yrs 7 mos)</div>
+      <div>
+        <div class="job-title">ITSC Engineer — Global Manufacturing Client</div>
+        <div class="job-org">Sourcemash Technologies Pvt. Ltd. · UK · USA · Japan · China · Netherlands</div>
+        <ul>
+          <li>Ran a 4.5-year infrastructure and endpoint management engagement for a global manufacturing enterprise — detailed below.</li>
+          <li>Managed Azure AD, Office 365, Exchange, MFA, licensing, and Defender endpoint security across the global user base.</li>
+          <li>Administered AS400 systems, including scheduled tape-to-tape backup processes.</li>
+          <li>Led a server virtualization-to-cloud migration with ongoing cloud VM support, network security rules, and hybrid identity management.</li>
+          <li>Managed automated patch compliance and implemented full-disk encryption on cloud-hosted servers.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="job reveal">
+      <div class="job-meta">Jan 2019 — May 2021</div>
+      <div>
+        <div class="job-title">System Engineer</div>
+        <div class="job-org">Win IT Technologies · Chandigarh, India · On-site</div>
+        <ul>
+          <li>HPE server hardware support — OS installation, RAID configuration, NAS, and network share provisioning.</li>
+          <li>Application support and network/peripheral troubleshooting for enterprise users.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="g3projects">
+  <div class="wrap">
+    <div class="section-head"><span class="idx">◆</span><h2>G3 Worldwide — active projects</h2><span class="rule"></span></div>
+    <p class="section-sub">Currently in progress as the sole IT engineer on both tenants. Details kept general while these are live.</p>
+    <div class="projects">
+      <div class="proj reveal">
+        <span class="proj-status status-active">In progress</span>
+        <div class="proj-title">Tenant Consolidation Migration</div>
+        <div class="proj-desc">Planning and executing a consolidation of two M365 tenants using an enterprise-grade migration platform — covering identity, mailboxes, file storage, and collaboration data.</div>
+        <div class="proj-tags"><span class="tag">M365 migration</span><span class="tag">Identity</span><span class="tag">SharePoint/OneDrive</span></div>
+      </div>
+      <div class="proj reveal">
+        <span class="proj-status status-active">In progress</span>
+        <div class="proj-title">Identity & Access Hardening</div>
+        <div class="proj-desc">Rolling out risk-based sign-in policies, access restrictions, and session controls across both tenants, backed by hands-on incident response experience.</div>
+        <div class="proj-tags"><span class="tag">Conditional Access</span><span class="tag">MFA</span><span class="tag">Threat response</span></div>
+      </div>
+      <div class="proj reveal">
+        <span class="proj-status status-active">In progress</span>
+        <div class="proj-title">Network Segmentation Initiative</div>
+        <div class="proj-desc">Redesigning the corporate network with proper traffic segmentation to reduce lateral-movement risk and strengthen the overall security posture.</div>
+        <div class="proj-tags"><span class="tag">Network security</span><span class="tag">Zero trust</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="flagship">
+  <div class="wrap">
+    <div class="section-head"><span class="idx">◆</span><h2>Sourcemash — internal infrastructure modernization</h2><span class="rule"></span></div>
+    <p class="section-sub">A completed, full-scope rebuild of Sourcemash's own internal network and identity infrastructure.</p>
+
+    <div class="flagship reveal">
+      <span class="flag-tag">Completed · Internal infrastructure</span>
+      <div class="flag-title">Zero-Downtime Network & Hybrid Cloud Modernization</div>
+      <div class="flag-punch">Rebuilt the network under the business, not around it.</div>
+      <p class="flag-desc">Led a ground-up modernization of Sourcemash's internal network and identity backbone — new firewall platform, network re-architecture, on-prem-to-cloud infrastructure migration, and a rebuilt hybrid identity foundation — delivered without business disruption.</p>
+
+      <div class="metric-row">
+        <div class="metric"><div class="metric-num">150</div><div class="metric-label">Endpoints migrated</div></div>
+        <div class="metric"><div class="metric-num">0</div><div class="metric-label">Minutes of downtime</div></div>
+        <div class="metric"><div class="metric-num">1</div><div class="metric-label">Engineer, full project</div></div>
+        <div class="metric"><div class="metric-num">4</div><div class="metric-label">Domains modernized</div></div>
+      </div>
+
+      <div class="cap-row">
+        <span class="cap">Firewall platform migration</span>
+        <span class="cap">Network re-architecture</span>
+        <span class="cap">Hybrid identity rebuild</span>
+        <span class="cap">Secure cloud connectivity</span>
+        <span class="cap">Zero-downtime cutover</span>
+        <span class="cap">Legacy decommissioning</span>
+      </div>
+    </div>
+
+    <div class="chart-card reveal">
+      <div class="chart-title">Migration footprint — by the numbers</div>
+      <div class="bar-row">
+        <div class="bar-label">Sourcemash network endpoints</div>
+        <div class="bar-track"><div class="bar-fill" style="width:60%"></div></div>
+        <div class="bar-val">150</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Client servers modernized</div>
+        <div class="bar-track"><div class="bar-fill signal" style="width:35%"></div></div>
+        <div class="bar-val">80–90</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Sourcemash-managed devices (Intune)</div>
+        <div class="bar-track"><div class="bar-fill accent" style="width:80%"></div></div>
+        <div class="bar-val">200+</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="spotlight">
+  <div class="wrap">
+    <div class="section-head"><span class="idx">◆</span><h2>Client engagement spotlight</h2><span class="rule"></span></div>
+    <p class="section-sub">4.5 years embedded on one of Sourcemash's flagship enterprise accounts.</p>
+
+    <div class="spotlight reveal">
+      <span class="spot-badge">Client · Berkshire Hathaway Group of Companies</span>
+      <div class="spot-title">Global Manufacturing Client — UK · USA · Japan · China · Netherlands</div>
+      <p class="spot-desc">A multi-year engagement modernizing server infrastructure, endpoint identity, and IT operations for a global manufacturing enterprise within the Berkshire Hathaway group — spanning legacy systems, cloud migration, endpoint security, and process automation across five countries.</p>
+
+      <div class="reach-row">
+        <span class="reach-badge">Berkshire Hathaway Group Company</span>
+        <span class="reach-badge">5-Country Global Operations</span>
+        <span class="reach-badge">Fortune-Caliber Enterprise</span>
+        <span class="reach-badge">Bengaluru Tech Corridor</span>
+      </div>
+
+      <div class="workstreams">
+        <div class="ws">
+          <div class="ws-title">Cloud server migration</div>
+          <div class="ws-desc">Led a server virtualization-to-cloud migration across development and production environments, with ongoing cloud VM support, network security rules, and hybrid identity management.</div>
+        </div>
+        <div class="ws">
+          <div class="ws-title">Legacy systems administration</div>
+          <div class="ws-desc">Administered AS400 systems for the client, including scheduled tape-to-tape backup processes on enterprise tape library hardware.</div>
+        </div>
+        <div class="ws">
+          <div class="ws-title">Patch & encryption compliance</div>
+          <div class="ws-desc">Managed automated patch compliance across cloud-hosted servers and implemented full-disk encryption with centralized, access-controlled key management.</div>
+        </div>
+        <div class="ws">
+          <div class="ws-title">Endpoint modernization</div>
+          <div class="ws-desc">Migrated UK endpoint fleet to modern cloud-native device identity, with user data migrated via OneDrive.</div>
+        </div>
+        <div class="ws">
+          <div class="ws-title">Application server support</div>
+          <div class="ws-desc">Supported and migrated print-workflow and business application servers, resolving connectivity and application-level issues.</div>
+        </div>
+        <div class="ws">
+          <div class="ws-title">Cross-functional collaboration</div>
+          <div class="ws-desc">Worked alongside Cybersecurity, CRM, and Power BI teams to manage secure access provisioning and escalations across the global user base.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="confid reveal">Some project and client details on this page have been generalized to respect client and employer confidentiality.</div>
+  </div>
+</section>
+
+<section id="proficiency">
+  <div class="wrap">
+    <div class="section-head"><span class="idx">◆</span><h2>Proficiency map</h2><span class="rule"></span></div>
+    <p class="section-sub">Where 7+ years of hands-on hybrid IT work has concentrated.</p>
+    <div class="radar-card reveal">
+      <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g stroke="#E1E4E9" fill="none">
+          <polygon points="160,30 275,95 275,225 160,290 45,225 45,95"/>
+          <polygon points="160,68 237,110 237,210 160,252 83,210 83,110"/>
+          <polygon points="160,106 199,125 199,195 160,214 121,195 121,125"/>
+        </g>
+        <g stroke="#E1E4E9"><line x1="160" y1="160" x2="160" y2="30"/><line x1="160" y1="160" x2="275" y2="95"/><line x1="160" y1="160" x2="275" y2="225"/><line x1="160" y1="160" x2="160" y2="290"/><line x1="160" y1="160" x2="45" y2="225"/><line x1="160" y1="160" x2="45" y2="95"/></g>
+        <polygon points="160,42 253,102 249,213 160,278 76,208 71,104" fill="rgba(43,76,126,0.16)" stroke="#2B4C7E" stroke-width="2"/>
+        <g fill="#2B4C7E"><circle cx="160" cy="42" r="4"/><circle cx="253" cy="102" r="4"/><circle cx="249" cy="213" r="4"/><circle cx="160" cy="278" r="4"/><circle cx="76" cy="208" r="4"/><circle cx="71" cy="104" r="4"/></g>
+        <g font-family="JetBrains Mono, monospace" font-size="11" fill="#5B6370">
+          <text x="160" y="20" text-anchor="middle">Identity & M365</text>
+          <text x="300" y="90" text-anchor="start">Security</text>
+          <text x="300" y="230" text-anchor="start">Cloud Migration</text>
+          <text x="160" y="308" text-anchor="middle">Endpoint Mgmt</text>
+          <text x="20" y="230" text-anchor="end">Network</text>
+          <text x="20" y="90" text-anchor="end">Automation</text>
+        </g>
+      </svg>
+      <div class="radar-legend">
+        <div class="radar-item"><span>Identity & M365 Administration</span><span>Expert</span></div>
+        <div class="radar-item"><span>Security & Conditional Access</span><span>Advanced</span></div>
+        <div class="radar-item"><span>Cloud Migration (Azure)</span><span>Advanced</span></div>
+        <div class="radar-item"><span>Endpoint Management (Intune)</span><span>Expert</span></div>
+        <div class="radar-item"><span>Network & Firewall Architecture</span><span>Advanced</span></div>
+        <div class="radar-item"><span>Automation (PowerShell / Graph)</span><span>Growing</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head"><span class="idx">◆</span><h2>Technical expertise</h2><span class="rule"></span></div>
+    <div class="skill-grid reveal">
+      <div class="skill-block"><h3>Cloud & Identity</h3><p>Microsoft 365 multi-tenant admin, Exchange Online, Entra ID, Hybrid Identity, Conditional Access, MFA & SSO, cross-tenant migration.</p></div>
+      <div class="skill-block"><h3>Security</h3><p>Defender for Office 365, risk-based Conditional Access, disk encryption enforcement, centralized key management, retention & compliance policy.</p></div>
+      <div class="skill-block"><h3>Endpoint & Device</h3><p>Microsoft Intune at scale, Autopilot, on-prem-to-cloud device identity migration, OneDrive data migration, identity-lifecycle automation.</p></div>
+      <div class="skill-block"><h3>Network & Infrastructure</h3><p>Enterprise firewall platforms, VLAN segmentation & re-architecture, SD-WAN, site-to-site VPN, Windows Server (ADDS/DNS/DHCP), RAID/NAS.</p></div>
+      <div class="skill-block"><h3>Cloud Migration</h3><p>On-prem virtualization to cloud VM migration, hybrid connectivity design, zero-downtime cutover planning.</p></div>
+      <div class="skill-block"><h3>Automation & Collaboration</h3><p>PowerShell & Microsoft Graph API, SharePoint Online migrations, cross-functional work with Cybersecurity, CRM, and Power BI teams.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="credentials">
+  <div class="wrap">
+    <div class="section-head"><span class="idx">◆</span><h2>Education & credentials</h2><span class="rule"></span></div>
+    <div class="cert-grid">
+      <div class="cert-card reveal">
+        <div class="ring">
+          <svg width="64" height="64" viewBox="0 0 64 64">
+            <circle class="ring-track" cx="32" cy="32" r="27"/>
+            <circle class="ring-fill cert-ring" cx="32" cy="32" r="27" stroke-dasharray="170" stroke-dashoffset="170" data-progress="0.55"/>
+          </svg>
+          <div class="ring-label">Active</div>
+        </div>
+        <div>
+          <div class="cert-name">AZ-104</div>
+          <div class="cert-sub">Azure Administrator Associate · In progress</div>
+        </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="ring">
+          <svg width="64" height="64" viewBox="0 0 64 64">
+            <circle class="ring-track" cx="32" cy="32" r="27"/>
+            <circle class="ring-fill cert-ring" cx="32" cy="32" r="27" stroke-dasharray="170" stroke-dashoffset="170" data-progress="0.4"/>
+          </svg>
+          <div class="ring-label">Active</div>
+        </div>
+        <div>
+          <div class="cert-name">MS-102</div>
+          <div class="cert-sub">M365 Administrator Expert · In progress</div>
+        </div>
+      </div>
+    </div>
+    <div class="creds reveal">
+      <div class="cred-row"><div><div class="cred-name">Bachelor of Computer Applications (BCA)</div><div class="cred-org">Lovely Professional University</div></div><div class="cred-when">2023 – 2024</div></div>
+      <div class="cred-row"><div><div class="cred-name">Higher Secondary (12th), CBSE</div><div class="cred-org"></div></div><div class="cred-when">2017</div></div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-cta reveal">
+      <h2>Let's talk infrastructure.</h2>
+      <p>Open to conversations about IT infrastructure, M365, and security roles — especially where hybrid identity and migration work is involved.</p>
+      <div class="foot-links">
+        <a class="btn btn-primary" href="mailto:mandeep.ithelp@gmail.com">Email me</a>
+        <a class="btn btn-ghost" href="https://linkedin.com/in/mandeep-singh-aa37b7201" target="_blank" rel="noopener">Connect on LinkedIn</a>
+      </div>
+      <div class="fine">Mohali, Punjab, India · +91 62803 87811</div>
+
+      <div style="margin-top:32px;">
+        <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="large" data-theme="light" data-type="VERTICAL" data-vanity="mandeep-singh-aa37b7201" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://in.linkedin.com/in/mandeep-singh-aa37b7201?trk=profile-badge">Mandeep Singh</a></div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {threshold:.15});
+  els.forEach(el=>io.observe(el));
+
+  // count-up stats
+  const counters = document.querySelectorAll('.counter');
+  const counterIO = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = parseInt(el.dataset.target, 10);
+      const duration = 900;
+      const start = performance.now();
+      function tick(now){
+        const p = Math.min((now-start)/duration, 1);
+        el.textContent = Math.round(target * (1 - Math.pow(1-p, 3)));
+        if(p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      counterIO.unobserve(el);
+    });
+  }, {threshold:.4});
+  counters.forEach(c=>counterIO.observe(c));
+
+  // progress rings
+  const rings = document.querySelectorAll('.cert-ring');
+  const ringIO = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting) return;
+      const ring = entry.target;
+      const progress = parseFloat(ring.dataset.progress);
+      const circumference = 170;
+      ring.style.strokeDashoffset = circumference - (progress * circumference);
+      ringIO.unobserve(ring);
+    });
+  }, {threshold:.4});
+  rings.forEach(r=>ringIO.observe(r));
+</script>
+</body>
+</html>
